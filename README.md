@@ -53,13 +53,15 @@ This sparked an idea: rather than patch a Java Swing GUI, why not reimagine FSM-
 ### Installation
 
 ```bash
-pip install fsmgen
-```
-
-Or from source:
-```bash
+# Clone the repository
 git clone https://github.com/HankJediAssistant/fsmgen.git
 cd fsmgen
+
+# Create and activate a virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate
+
+# Install fsmgen
 pip install .
 ```
 
