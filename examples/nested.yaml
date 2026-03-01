@@ -1,0 +1,29 @@
+fsm:
+  name: processor
+  clock: clk
+  reset: rst
+  states:
+    IDLE:
+      outputs: {busy: 0, done_out: 0}
+      transitions:
+        - to: PROCESSING
+          when: start
+    PROCESSING:
+      outputs: {busy: 1, done_out: 0}
+      substates:
+        PROC_INIT:
+          transitions:
+            - to: PROC_RUN
+              when: init_done
+        PROC_RUN:
+          transitions:
+            - to: DONE
+              when: proc_done
+      transitions:
+        - to: IDLE
+          when: abort
+    DONE:
+      outputs: {busy: 0, done_out: 1}
+      transitions:
+        - to: IDLE
+          when: ack

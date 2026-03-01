@@ -1,0 +1,15 @@
+fsm:
+  name: my_fsm
+  clock: clk
+  reset: rst
+  states:
+    IDLE:
+      outputs: {led: 0}
+      transitions:
+        - to: ACTIVE
+          when: start
+    ACTIVE:
+      outputs: {led: 1}
+      transitions:
+        - to: IDLE
+          when: done

@@ -1,0 +1,33 @@
+fsm:
+  name: packet_router
+  clock: clk
+  reset: rst
+  states:
+    IDLE:
+      outputs: {busy: 0, route: 0}
+      transitions:
+        - to: CLASSIFY
+          when: pkt_valid
+    CLASSIFY:
+      outputs: {busy: 1, route: 0}
+      fork:
+        - when: is_urgent
+          to: FAST_PATH
+        - when: is_normal
+          to: SLOW_PATH
+        - default: DROP
+    FAST_PATH:
+      outputs: {busy: 1, route: 1}
+      transitions:
+        - to: IDLE
+          when: sent
+    SLOW_PATH:
+      outputs: {busy: 1, route: 2}
+      transitions:
+        - to: IDLE
+          when: sent
+    DROP:
+      outputs: {busy: 0, route: 3}
+      transitions:
+        - to: IDLE
+          when: dropped
